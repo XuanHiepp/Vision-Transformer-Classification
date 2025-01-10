@@ -1,5 +1,22 @@
 from torch import nn
-from modules.data_prep import PatchEmbedding
+
+
+class PatchEmbedding(nn.Module):
+    def __init__(self, in_channels=3, patch_size=16, embedding_dim=768):
+        super().__init__()
+
+        self.patch_split = nn.Conv2d(in_channels=in_channels, out_channels=embedding_dim,
+                                     kernel_size=patch_size, stride=patch_size, padding=0)
+
+        # Create a layer to flatten the patch feature maps into a single dimension
+        # only flatten the feature map dimensions into a single vector
+        self.flatten = nn.Flatten(start_dim=2, end_dim=3)
+
+    def forward(self, x):
+        x_patches = self.patch_split(x)
+        x_flatten = self.flatten(x_patches)
+
+        return x_flatten.permute(0, 2, 1)
 
 
 # Create Transformer Block
@@ -112,21 +129,3 @@ class ViTBlock(nn.Module):
         x = self.classifier(x[:, 0])
 
         return x
-
-
-class PatchEmbedding(nn.Module):
-    def __init__(self, in_channels=3, patch_size=16, embedding_dim=768):
-        super().__init__()
-
-        self.patch_split = nn.Conv2d(in_channels=in_channels, out_channels=embedding_dim,
-                                     kernel_size=patch_size, stride=patch_size, padding=0)
-
-        # Create a layer to flatten the patch feature maps into a single dimension
-        # only flatten the feature map dimensions into a single vector
-        self.flatten = nn.Flatten(start_dim=2, end_dim=3)
-
-    def forward(self, x):
-        x_patches = self.patch_split(x)
-        x_flatten = self.flatten(x_patches)
-
-        return x_flatten.permute(0, 2, 1)
