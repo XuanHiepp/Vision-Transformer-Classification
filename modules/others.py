@@ -19,6 +19,8 @@ def plot_an_image(dataloader, class_names):
     plt.title(class_names[label])
     plt.axis(False)
 
+    return image
+
 
 # Set seeds
 def set_seeds(seed=42):

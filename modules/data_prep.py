@@ -6,6 +6,50 @@ from torch.utils.data import DataLoader, random_split
 NUM_WORKERS = os.cpu_count()
 
 
+def process_data(image, patch_size):
+    # 1. Print shape of original image tensor
+    print(f"Image tensor shape: {image.shape}")
+    height, width = image.shape[1], image.shape[2]
+
+    # 2. Get image tensor
+    x = image.unsqueeze(0)
+    print(f"Input image with batch dimension shape: {x.shape}")
+
+    # 3. Create patch embedding layer
+    patch_embedding_layer = PatchEmbedding(in_channels=3,
+                                           patch_size=patch_size,
+                                           embedding_dim=768)
+
+    # 4. Pass image through patch embedding layer
+    patch_embedding = patch_embedding_layer(x)
+    print(f"Patching embedding shape: {patch_embedding.shape}")
+
+    # 5. Create class token embedding
+    batch_size = patch_embedding.shape[0]
+    embedding_dimension = patch_embedding.shape[-1]
+    class_token = nn.Parameter(torch.ones(
+        batch_size, 1, embedding_dimension), requires_grad=True)
+    print(f"Class token embedding shape: {class_token.shape}")
+
+    # 6. Prepend class token embedding to patch embedding
+    patch_embedding_class_token = torch.cat(
+        (class_token, patch_embedding), dim=1)
+    print(
+        f"Patch embedding with class token shape: {patch_embedding_class_token.shape}")
+
+    # 7. Create position embedding
+    number_of_patches = int((height * width) / patch_size**2)
+    position_embedding = nn.Parameter(torch.ones(
+        1, number_of_patches+1, embedding_dimension), requires_grad=True)
+
+    # 8. Add position embedding to patch embedding with class token
+    patch_and_position_embedding = patch_embedding_class_token + position_embedding
+    print(
+        f"Patch and position embedding shape: {patch_and_position_embedding.shape}")
+
+    print(patch_embedding_class_token)
+
+
 def create_dataloaders(root_path, transform, batch_size, num_workers=NUM_WORKERS):
     # ImageFolder
     data = datasets.ImageFolder(root_path, transform=transform)
