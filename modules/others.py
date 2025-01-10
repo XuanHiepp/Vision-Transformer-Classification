@@ -30,7 +30,7 @@ def plot_an_image(dataloader, class_names, patch_size):
     # 7. Create class token embedding
     batch_size = patch_embedding.shape[0]
     embedding_dimension = patch_embedding.shape[-1]
-    class_token = nn.Parameter(nn.ones(
+    class_token = nn.Parameter(torch.ones(
         batch_size, 1, embedding_dimension), requires_grad=True)
 
     # 8. Prepend class token embedding to patch embedding
