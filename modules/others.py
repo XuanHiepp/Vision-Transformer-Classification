@@ -4,11 +4,14 @@ import torch
 
 # Visualize a image
 def plot_an_image(dataloader, class_names):
+    first_image = None
+
     # Get a batch of images
     image_batch, label_batch = next(iter(dataloader))
 
     # Get a single image from the batch
     image, label = image_batch[0], label_batch[0]
+    first_image = image
 
     # View the batch shapes
     print(image.shape, label)
@@ -19,7 +22,7 @@ def plot_an_image(dataloader, class_names):
     plt.title(class_names[label])
     plt.axis(False)
 
-    return image
+    return first_image
 
 
 # Set seeds
