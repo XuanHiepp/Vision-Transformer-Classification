@@ -11,13 +11,9 @@ def plot_an_image(dataloader, class_names):
 
     # Get a single image from the batch
     image, label = image_batch[0], label_batch[0]
-    first_image = image
-
-    # View the batch shapes
-    print(image.shape, label)
+    first_image = image.detach().clone()
 
     # Plot image with matplotlib
-    # rearrange image dimensions to suit matplotlib [color_channels, height, width] -> [height, width, color_channels]
     plt.imshow(image.permute(1, 2, 0))
     plt.title(class_names[label])
     plt.axis(False)
