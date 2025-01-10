@@ -2,6 +2,7 @@ import torch
 import torchvision
 from torchvision import transforms
 from PIL import Image
+import matplotlib.pyplot as plt
 
 # Set device
 device = "cuda" if torch.cuda.is_available() else "cpu"
