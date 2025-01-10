@@ -1,5 +1,10 @@
+import torch
+import torchvision
+from torchvision import transforms
 from PIL import Image
-import requests
+
+# Set device
+device = "cuda" if torch.cuda.is_available() else "cpu"
 
 
 # Predict on a target image

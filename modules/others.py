@@ -1,3 +1,7 @@
+import matplotlib.pyplot as plt
+import torch
+
+
 # Visualize a image
 def plot_an_image(dataloader, class_names):
     # Get a batch of images
