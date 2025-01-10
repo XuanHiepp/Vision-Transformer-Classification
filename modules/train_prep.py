@@ -1,5 +1,6 @@
 from tqdm.auto import tqdm
 from typing import Dict, List, Tuple
+import torch
 
 
 def train_step(model, dataloader, loss_fn, optimizer, device) -> Tuple[float, float]:
