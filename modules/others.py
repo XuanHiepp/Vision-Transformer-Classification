@@ -1,10 +1,10 @@
 from model import PatchEmbedding
 import matplotlib.pyplot as plt
-import torch
+import torch as nn
 
 
 # Visualize a image
-def plot_an_image(dataloader, class_names):
+def plot_an_image(dataloader, class_names, patch_size):
 
     # 1. Get a batch of images
     image_batch, label_batch = next(iter(dataloader))
@@ -60,6 +60,6 @@ def set_seeds(seed=42):
         seed (int, optional): Random seed to set. Defaults to 42.
     """
     # Set the seed for general torch operations
-    torch.manual_seed(seed)
+    nn.manual_seed(seed)
     # Set the seed for CUDA torch operations (ones that happen on the GPU)
-    torch.cuda.manual_seed(seed)
+    nn.cuda.manual_seed(seed)
