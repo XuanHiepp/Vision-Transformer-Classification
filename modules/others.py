@@ -1,6 +1,7 @@
 from modules.model import PatchEmbedding
 import matplotlib.pyplot as plt
-import torch as nn
+import torch
+from torch import nn
 
 
 # Visualize a image
@@ -60,6 +61,6 @@ def set_seeds(seed=42):
         seed (int, optional): Random seed to set. Defaults to 42.
     """
     # Set the seed for general torch operations
-    nn.manual_seed(seed)
+    torch.manual_seed(seed)
     # Set the seed for CUDA torch operations (ones that happen on the GPU)
-    nn.cuda.manual_seed(seed)
+    torch.cuda.manual_seed(seed)
