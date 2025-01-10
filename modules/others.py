@@ -34,12 +34,12 @@ def plot_an_image(dataloader, class_names, patch_size):
         batch_size, 1, embedding_dimension), requires_grad=True)
 
     # 8. Prepend class token embedding to patch embedding
-    patch_embedding_class_token = nn.cat(
+    patch_embedding_class_token = torch.cat(
         (class_token, patch_embedding), dim=1)
 
     # 9. Create position embedding
     number_of_patches = int((height * width) / patch_size**2)
-    position_embedding = nn.Parameter(nn.ones(
+    position_embedding = nn.Parameter(torch.ones(
         1, number_of_patches+1, embedding_dimension), requires_grad=True)
 
     # 10. Add position embedding to patch embedding with class token
