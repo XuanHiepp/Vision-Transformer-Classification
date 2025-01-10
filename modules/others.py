@@ -1,4 +1,4 @@
-from model import PatchEmbedding
+from modules.model import PatchEmbedding
 import matplotlib.pyplot as plt
 import torch as nn
 
