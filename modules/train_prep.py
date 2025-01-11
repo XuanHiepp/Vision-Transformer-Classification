@@ -1,6 +1,8 @@
+from pathlib import Path
 from tqdm.auto import tqdm
 from typing import Dict, List, Tuple
 import torch
+from pathlib import Path
 
 
 def train_step(model, dataloader, loss_fn, optimizer, device) -> Tuple[float, float]:
@@ -69,6 +71,21 @@ def test_step(model, dataloader, loss_fn, device) -> Tuple[float, float]:
     test_loss = test_loss / len(dataloader)
     test_acc = test_acc / len(dataloader)
     return test_loss, test_acc
+
+
+def save_model(model, target_dir, model_name):
+    # Create target directory
+    target_dir_path = Path(target_dir)
+    target_dir_path.mkdir(parents=True,
+                          exist_ok=True)
+
+    # Create model save path
+    model_save_path = target_dir_path / model_name
+
+    # Save the model state_dict()
+    print(f"[INFO] Saving model to: {model_save_path}")
+    torch.save(obj=model.state_dict(),
+               f=model_save_path)
 
 
 def train(model, train_dataloader, test_dataloader, optimizer, loss_fn, epochs, device) -> Dict[str, List]:
