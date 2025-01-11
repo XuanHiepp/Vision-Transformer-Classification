@@ -2,6 +2,7 @@ from modules.model import PatchEmbedding
 import matplotlib.pyplot as plt
 import torch
 from torch import nn
+from pathlib import Path
 
 
 # Visualize a image
@@ -64,3 +65,18 @@ def set_seeds(seed=42):
     torch.manual_seed(seed)
     # Set the seed for CUDA torch operations (ones that happen on the GPU)
     torch.cuda.manual_seed(seed)
+
+
+def save_model(model, target_dir, model_name):
+    # Create target directory
+    target_dir_path = Path(target_dir)
+    target_dir_path.mkdir(parents=True,
+                          exist_ok=True)
+
+    # Create model save path
+    model_save_path = target_dir_path / model_name
+
+    # Save the model state_dict()
+    print(f"[INFO] Saving model to: {model_save_path}")
+    torch.save(obj=model.state_dict(),
+               f=model_save_path)
