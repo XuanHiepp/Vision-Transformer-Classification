@@ -1,3 +1,10 @@
+## Image Transformer for Classification
+
+This project demonstrates how to train a **Transformer-based model** for image classification tasks.  
+It covers both **training from scratch** and **fine-tuning with a pretrained Vision Transformer (ViT)**.
+
+---
+
 ## Model training
 1. For Image Classification from Scratch:
 <pre> <code>image_classifier_from_scratch.ipynb</code></pre> 
